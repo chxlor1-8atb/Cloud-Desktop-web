@@ -84,9 +84,10 @@ export const authOptions: NextAuthOptions = {
 
 // Helper function to store OTP
 export async function storeOTP(email: string, otp: string) {
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
     await sql`
-        INSERT INTO otp_codes (email, otp, expires_at)
-        VALUES (${email}, ${otp}, NOW() + INTERVAL '5 minutes')
+        INSERT INTO otp_codes (email, otp, expires_at, used)
+        VALUES (${email}, ${otp}, ${expiresAt}, FALSE)
     `
 }
 
