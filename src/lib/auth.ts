@@ -18,15 +18,21 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.otp) {
+                    console.log('Missing credentials')
                     return null
                 }
 
+                const email = credentials.email.toLowerCase().trim()
+                const otp = credentials.otp.trim()
+
                 try {
+                    console.log(`Verifying OTP for ${email} with code ${otp}`)
+
                     // Find valid OTP in database
                     const result = await sql`
                         SELECT * FROM otp_codes 
-                        WHERE email = ${credentials.email} 
-                        AND otp = ${credentials.otp}
+                        WHERE email = ${email} 
+                        AND otp = ${otp}
                         AND expires_at > NOW()
                         AND used = FALSE
                         ORDER BY created_at DESC
@@ -34,7 +40,12 @@ export const authOptions: NextAuthOptions = {
                     `
 
                     if (result.length === 0) {
-                        console.log('OTP not found or expired for:', credentials.email)
+                        console.log('OTP verification failed: Code not found, expired, or used')
+                        // Optional: Check if expired exists to give better logs
+                        const expired = await sql`SELECT * FROM otp_codes WHERE email = ${email} AND otp = ${otp} LIMIT 1`
+                        if (expired.length > 0) {
+                            console.log('Found expired/used code:', expired[0])
+                        }
                         return null
                     }
 
@@ -46,12 +57,12 @@ export const authOptions: NextAuthOptions = {
                     `
 
                     return {
-                        id: credentials.email,
-                        email: credentials.email,
-                        name: credentials.email.split('@')[0],
+                        id: email,
+                        email: email,
+                        name: email.split('@')[0],
                     }
                 } catch (error) {
-                    console.error('Error verifying OTP:', error)
+                    console.error('Error verifying OTP - Database error:', error)
                     return null
                 }
             },
@@ -84,10 +95,11 @@ export const authOptions: NextAuthOptions = {
 
 // Helper function to store OTP
 export async function storeOTP(email: string, otp: string) {
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
+    const cleanEmail = email.toLowerCase().trim()
+    // Use Database Time for consistency
     await sql`
         INSERT INTO otp_codes (email, otp, expires_at, used)
-        VALUES (${email}, ${otp}, ${expiresAt}, FALSE)
+        VALUES (${cleanEmail}, ${otp}, NOW() + INTERVAL '5 minutes', FALSE)
     `
 }
 
