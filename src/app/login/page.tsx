@@ -31,12 +31,12 @@ export default function LoginPage() {
             const data = await res.json()
 
             if (!res.ok) {
-                throw new Error(data.error || 'Failed to send OTP')
+                throw new Error(data.error || 'ไม่สามารถส่ง OTP ได้')
             }
 
             setStep('otp')
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Something went wrong')
+            setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดบางอย่าง')
         } finally {
             setLoading(false)
         }
@@ -55,12 +55,12 @@ export default function LoginPage() {
             })
 
             if (result?.error) {
-                throw new Error('Invalid OTP code')
+                throw new Error('รหัส OTP ไม่ถูกต้อง')
             }
 
             router.push('/dashboard')
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Something went wrong')
+            setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดบางอย่าง')
         } finally {
             setLoading(false)
         }
@@ -94,7 +94,7 @@ export default function LoginPage() {
                         />
                     </div>
                     <h1 className={styles.logoText}>Cloud Desktop</h1>
-                    <p className={styles.logoSubtext}>Your files in the cloud</p>
+                    <p className={styles.logoSubtext}>ไฟล์ของคุณบนคลาวด์</p>
                 </div>
 
                 {/* Error Message */}
@@ -111,7 +111,7 @@ export default function LoginPage() {
                             <Mail className={styles.inputIcon} size={20} />
                             <input
                                 type="email"
-                                placeholder="Enter your email"
+                                placeholder="กรอกอีเมลของคุณ"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className={styles.input}
@@ -129,7 +129,7 @@ export default function LoginPage() {
                                 <Loader2 className={styles.spinner} size={20} />
                             ) : (
                                 <>
-                                    Send OTP
+                                    ส่งรหัส OTP
                                     <ArrowRight size={20} />
                                 </>
                             )}
@@ -141,14 +141,14 @@ export default function LoginPage() {
                 {step === 'otp' && (
                     <form onSubmit={handleVerifyOTP} className={styles.form}>
                         <p className={styles.otpInfo}>
-                            We sent a code to <strong>{email}</strong>
+                            เราได้ส่งรหัสไปยัง <strong>{email}</strong>
                         </p>
 
                         <div className={styles.inputGroup}>
                             <Lock className={styles.inputIcon} size={20} />
                             <input
                                 type="text"
-                                placeholder="Enter 6-digit OTP"
+                                placeholder="กรอกรหัส OTP 6 หลัก"
                                 value={otp}
                                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                                 className={styles.input}
@@ -167,7 +167,7 @@ export default function LoginPage() {
                                 <Loader2 className={styles.spinner} size={20} />
                             ) : (
                                 <>
-                                    Verify & Login
+                                    ยืนยันและเข้าสู่ระบบ
                                     <ArrowRight size={20} />
                                 </>
                             )}
@@ -182,14 +182,14 @@ export default function LoginPage() {
                                 setError('')
                             }}
                         >
-                            ← Back to email
+                            ← กลับไปหน้าอีเมล
                         </button>
                     </form>
                 )}
 
                 {/* Divider */}
                 <div className={styles.divider}>
-                    <span>or continue with</span>
+                    <span>หรือดำเนินการต่อด้วย</span>
                 </div>
 
                 {/* Google Sign In */}
@@ -215,7 +215,7 @@ export default function LoginPage() {
                             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                         />
                     </svg>
-                    Continue with Google
+                    เข้าสู่ระบบด้วย Google
                 </button>
             </div>
         </div>

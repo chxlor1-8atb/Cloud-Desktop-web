@@ -40,7 +40,7 @@ export default function DashboardPage() {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
     const [searchQuery, setSearchQuery] = useState('')
     const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([
-        { id: 'root', name: 'My Drive' }
+        { id: 'root', name: 'ไดรฟ์ของฉัน' }
     ])
     const [currentFolderId, setCurrentFolderId] = useState<string | null>(null)
     const [showNewFolderModal, setShowNewFolderModal] = useState(false)
@@ -162,7 +162,7 @@ export default function DashboardPage() {
 
     // Delete file
     const handleDeleteFile = async (fileId: string) => {
-        if (!confirm('Are you sure you want to delete this file?')) return
+        if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบไฟล์นี้?')) return
 
         try {
             await fetch(`/api/files/${fileId}`, { method: 'DELETE' })
@@ -192,7 +192,7 @@ export default function DashboardPage() {
         return (
             <div className={styles.loadingScreen}>
                 <Loader2 className={styles.spinner} size={48} />
-                <p>Loading...</p>
+                <p>กำลังโหลด...</p>
             </div>
         )
     }
@@ -212,7 +212,7 @@ export default function DashboardPage() {
                         onClick={() => setShowUploadModal(true)}
                     >
                         <Upload size={20} />
-                        <span>Upload</span>
+                        <span>อัปโหลด</span>
                     </button>
 
                     <button
@@ -220,14 +220,14 @@ export default function DashboardPage() {
                         onClick={() => setShowNewFolderModal(true)}
                     >
                         <FolderPlus size={20} />
-                        <span>New Folder</span>
+                        <span>โฟลเดอร์ใหม่</span>
                     </button>
                 </div>
 
                 <nav className={styles.sidebarNav}>
                     <a href="#" className={`${styles.navItem} ${styles.active}`}>
                         <HardDrive size={20} />
-                        <span>My Drive</span>
+                        <span>ไดรฟ์ของฉัน</span>
                     </a>
                 </nav>
 
@@ -236,7 +236,7 @@ export default function DashboardPage() {
                     <div className={styles.storageInfo}>
                         <div className={styles.storageHeader}>
                             <HardDrive size={16} />
-                            <span>Storage</span>
+                            <span>พื้นที่จัดเก็บ</span>
                         </div>
                         <div className={styles.storageBar}>
                             <div
@@ -245,7 +245,7 @@ export default function DashboardPage() {
                             />
                         </div>
                         <p className={styles.storageText}>
-                            {formatFileSize(storageQuota.used)} of {formatFileSize(storageQuota.limit)} used
+                            ใช้ไป {formatFileSize(storageQuota.used)} จาก {formatFileSize(storageQuota.limit)}
                         </p>
                     </div>
                 )}
@@ -260,7 +260,7 @@ export default function DashboardPage() {
                         )}
                     </div>
                     <div className={styles.userInfo}>
-                        <span className={styles.userName}>{session?.user?.name || 'User'}</span>
+                        <span className={styles.userName}>{session?.user?.name || 'ผู้ใช้'}</span>
                         <span className={styles.userEmail}>{session?.user?.email}</span>
                     </div>
                     <button onClick={() => signOut({ callbackUrl: '/login' })} className={styles.logoutButton}>
@@ -277,7 +277,7 @@ export default function DashboardPage() {
                         <Search size={20} />
                         <input
                             type="text"
-                            placeholder="Search files and folders..."
+                            placeholder="ค้นหาไฟล์และโฟลเดอร์..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -324,7 +324,7 @@ export default function DashboardPage() {
                 {uploading && (
                     <div className={styles.uploadProgress}>
                         <Loader2 className={styles.spinner} size={20} />
-                        <span>Uploading files...</span>
+                        <span>กำลังอัปโหลดไฟล์...</span>
                     </div>
                 )}
 
@@ -332,13 +332,13 @@ export default function DashboardPage() {
                 {loading ? (
                     <div className={styles.loadingFiles}>
                         <Loader2 className={styles.spinner} size={32} />
-                        <p>Loading files...</p>
+                        <p>กำลังโหลดไฟล์...</p>
                     </div>
                 ) : filteredFiles.length === 0 ? (
                     <div className={styles.emptyState}>
                         <Cloud size={64} />
-                        <h3>No files yet</h3>
-                        <p>Upload files or create folders to get started</p>
+                        <h3>ยังไม่มีไฟล์</h3>
+                        <p>อัปโหลดไฟล์หรือสร้างโฟลเดอร์เพื่อเริ่มต้น</p>
                     </div>
                 ) : (
                     <div className={viewMode === 'grid' ? styles.filesGrid : styles.filesList}>
@@ -375,7 +375,7 @@ export default function DashboardPage() {
                                             </span>
                                             <span className={styles.fileDate}>
                                                 {file.modifiedTime
-                                                    ? new Date(file.modifiedTime).toLocaleDateString()
+                                                    ? new Date(file.modifiedTime).toLocaleDateString('th-TH')
                                                     : '--'}
                                             </span>
                                         </>
@@ -399,7 +399,7 @@ export default function DashboardPage() {
             {selectedFile && (
                 <aside className={styles.detailsSidebar}>
                     <div className={styles.detailsHeader}>
-                        <h3>File Details</h3>
+                        <h3>รายละเอียดไฟล์</h3>
                         <button onClick={() => setSelectedFile(null)}>
                             <X size={20} />
                         </button>
@@ -418,19 +418,19 @@ export default function DashboardPage() {
 
                         <div className={styles.detailsInfo}>
                             <div className={styles.detailsRow}>
-                                <span>Type</span>
+                                <span>ประเภท</span>
                                 <span>{selectedFile.mimeType.split('/').pop()}</span>
                             </div>
                             {selectedFile.size && (
                                 <div className={styles.detailsRow}>
-                                    <span>Size</span>
+                                    <span>ขนาด</span>
                                     <span>{formatFileSize(selectedFile.size)}</span>
                                 </div>
                             )}
                             {selectedFile.modifiedTime && (
                                 <div className={styles.detailsRow}>
-                                    <span>Modified</span>
-                                    <span>{new Date(selectedFile.modifiedTime).toLocaleDateString()}</span>
+                                    <span>แก้ไขเมื่อ</span>
+                                    <span>{new Date(selectedFile.modifiedTime).toLocaleDateString('th-TH')}</span>
                                 </div>
                             )}
                         </div>
@@ -444,7 +444,7 @@ export default function DashboardPage() {
                                     rel="noopener noreferrer"
                                 >
                                     <Download size={18} />
-                                    Download
+                                    ดาวน์โหลด
                                 </a>
                             )}
                             {selectedFile.webViewLink && (
@@ -454,7 +454,7 @@ export default function DashboardPage() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    Open in Drive
+                                    เปิดใน Drive
                                 </a>
                             )}
                             <button
@@ -462,7 +462,7 @@ export default function DashboardPage() {
                                 onClick={() => handleDeleteFile(selectedFile.id)}
                             >
                                 <Trash2 size={18} />
-                                Delete
+                                ลบไฟล์
                             </button>
                         </div>
                     </div>
@@ -474,7 +474,7 @@ export default function DashboardPage() {
                 <div className={styles.modalOverlay} onClick={() => setShowNewFolderModal(false)}>
                     <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
-                            <h3>New Folder</h3>
+                            <h3>โฟลเดอร์ใหม่</h3>
                             <button onClick={() => setShowNewFolderModal(false)}>
                                 <X size={20} />
                             </button>
@@ -482,7 +482,7 @@ export default function DashboardPage() {
                         <div className={styles.modalBody}>
                             <input
                                 type="text"
-                                placeholder="Folder name"
+                                placeholder="ชื่อโฟลเดอร์"
                                 value={newFolderName}
                                 onChange={(e) => setNewFolderName(e.target.value)}
                                 autoFocus
@@ -493,14 +493,14 @@ export default function DashboardPage() {
                                 className={styles.cancelButton}
                                 onClick={() => setShowNewFolderModal(false)}
                             >
-                                Cancel
+                                ยกเลิก
                             </button>
                             <button
                                 className={styles.createButton}
                                 onClick={handleCreateFolder}
                                 disabled={!newFolderName.trim() || creatingFolder}
                             >
-                                {creatingFolder ? <Loader2 className={styles.spinner} size={18} /> : 'Create'}
+                                {creatingFolder ? <Loader2 className={styles.spinner} size={18} /> : 'สร้าง'}
                             </button>
                         </div>
                     </div>
@@ -512,7 +512,7 @@ export default function DashboardPage() {
                 <div className={styles.modalOverlay} onClick={() => setShowUploadModal(false)}>
                     <div className={styles.modal} onClick={(e) => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden' }}>
                         <div className={styles.modalHeader}>
-                            <h3>Upload Files</h3>
+                            <h3>อัปโหลดไฟล์</h3>
                             <button onClick={() => setShowUploadModal(false)}>
                                 <X size={20} />
                             </button>
