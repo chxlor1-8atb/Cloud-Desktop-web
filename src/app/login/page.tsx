@@ -87,9 +87,10 @@ export default function LoginPage() {
                         <Image
                             src={icon}
                             alt="Cloud Desktop Logo"
-                            width={40}
-                            height={40}
+                            width={100}
+                            height={100}
                             style={{ objectFit: 'contain' }}
+                            priority
                         />
                     </div>
                     <h1 className={styles.logoText}>Cloud Desktop</h1>

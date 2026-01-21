@@ -107,16 +107,12 @@
 }
 
 .logoIcon {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     margin: 0 auto 16px;
-    background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
-    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
 }
 
 .logoText {
