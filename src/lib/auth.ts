@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
                 const otp = credentials.otp.trim()
 
                 try {
-                    console.log(`Verifying OTP for ${email} with code ${otp}`)
+                    console.log(`[Auth v2] Verifying OTP for ${email} with code ${otp}`)
 
                     // Atomic Validate-and-Mark-Used
                     const result = await sql`
