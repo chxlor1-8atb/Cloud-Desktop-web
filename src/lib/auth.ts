@@ -1,9 +1,7 @@
 import { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-
-// Store OTPs temporarily (in production, use Redis or database)
-const otpStore = new Map<string, { otp: string; expires: number }>()
+import { sql } from './db'
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -23,28 +21,38 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
-                const stored = otpStore.get(credentials.email)
+                try {
+                    // Find valid OTP in database
+                    const result = await sql`
+                        SELECT * FROM otp_codes 
+                        WHERE email = ${credentials.email} 
+                        AND otp = ${credentials.otp}
+                        AND expires_at > NOW()
+                        AND used = FALSE
+                        ORDER BY created_at DESC
+                        LIMIT 1
+                    `
 
-                if (!stored) {
+                    if (result.length === 0) {
+                        console.log('OTP not found or expired for:', credentials.email)
+                        return null
+                    }
+
+                    // Mark OTP as used
+                    await sql`
+                        UPDATE otp_codes 
+                        SET used = TRUE 
+                        WHERE id = ${result[0].id}
+                    `
+
+                    return {
+                        id: credentials.email,
+                        email: credentials.email,
+                        name: credentials.email.split('@')[0],
+                    }
+                } catch (error) {
+                    console.error('Error verifying OTP:', error)
                     return null
-                }
-
-                if (Date.now() > stored.expires) {
-                    otpStore.delete(credentials.email)
-                    return null
-                }
-
-                if (stored.otp !== credentials.otp) {
-                    return null
-                }
-
-                // OTP is valid, delete it
-                otpStore.delete(credentials.email)
-
-                return {
-                    id: credentials.email,
-                    email: credentials.email,
-                    name: credentials.email.split('@')[0],
                 }
             },
         }),
