@@ -83,11 +83,11 @@ export const authOptions: NextAuthOptions = {
 }
 
 // Helper function to store OTP
-export function storeOTP(email: string, otp: string) {
-    otpStore.set(email, {
-        otp,
-        expires: Date.now() + 5 * 60 * 1000, // 5 minutes
-    })
+export async function storeOTP(email: string, otp: string) {
+    await sql`
+        INSERT INTO otp_codes (email, otp, expires_at)
+        VALUES (${email}, ${otp}, NOW() + INTERVAL '5 minutes')
+    `
 }
 
 // Helper function to generate OTP
