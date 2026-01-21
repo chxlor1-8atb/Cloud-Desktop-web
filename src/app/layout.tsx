@@ -1,6 +1,18 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import './globals.css'
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+    viewportFit: 'cover',
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
+        { media: '(prefers-color-scheme: dark)', color: '#1e293b' },
+    ],
+}
 
 export const metadata: Metadata = {
     title: 'Cloud Desktop - ไฟล์ของคุณบนคลาวด์',
@@ -11,6 +23,14 @@ export const metadata: Metadata = {
         title: 'Cloud Desktop',
         description: 'ไฟล์ของคุณบนคลาวด์',
         type: 'website',
+    },
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+        title: 'Cloud Desktop',
+    },
+    formatDetection: {
+        telephone: false,
     },
 }
 

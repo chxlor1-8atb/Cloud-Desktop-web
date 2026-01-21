@@ -1,5 +1,5 @@
 /* Cloud Desktop - Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
 
 * {
   margin: 0;
@@ -61,33 +61,11 @@
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
   --transition-slow: 400ms ease;
-
-  /* Responsive Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-
-  /* Touch-friendly sizes */
-  --touch-target-min: 44px;
-  --sidebar-width: 280px;
-  --sidebar-width-collapsed: 0px;
-
-  /* Typography scale */
-  --font-xs: 0.75rem;
-  --font-sm: 0.875rem;
-  --font-base: 1rem;
-  --font-lg: 1.125rem;
-  --font-xl: 1.25rem;
-  --font-2xl: 1.5rem;
-  --font-3xl: 1.875rem;
 }
 
 html,
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans Thai', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg-dark);
   color: var(--text-primary);
   min-height: 100vh;
@@ -276,195 +254,154 @@ textarea::placeholder {
    RESPONSIVE DESIGN SYSTEM
    ======================================== */
 
-/* Mobile Menu Toggle Button */
-.mobileMenuToggle {
-  display: none;
-  position: fixed;
-  top: var(--spacing-md);
-  left: var(--spacing-md);
-  z-index: 150;
-  width: var(--touch-target-min);
-  height: var(--touch-target-min);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-fast);
-}
-
-.mobileMenuToggle:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--primary-light);
-}
-
-.mobileMenuToggle:active {
-  transform: scale(0.95);
-}
-
-/* Mobile Overlay */
-.mobileOverlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  z-index: 90;
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-}
-
-.mobileOverlay.active {
-  opacity: 1;
-}
-
-/* Touch-friendly button enhancements */
-@media (hover: none) and (pointer: coarse) {
+/* Touch-friendly minimum sizes */
+@media (pointer: coarse) {
 
   button,
   a,
+  input,
   [role="button"] {
-    min-height: var(--touch-target-min);
-    min-width: var(--touch-target-min);
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  input,
+  textarea {
+    font-size: 16px !important;
+    /* Prevents zoom on iOS */
   }
 }
 
-/* Responsive Container */
-.responsiveContainer {
-  width: 100%;
-  max-width: 100%;
-  padding: var(--spacing-md);
-}
-
-/* ========================================
-   TABLET BREAKPOINT (768px - 1024px)
-   ======================================== */
-@media (max-width: 1024px) {
-  :root {
-    --sidebar-width: 240px;
-    --spacing-lg: 20px;
-    --spacing-xl: 28px;
-  }
-}
-
-/* ========================================
-   MOBILE BREAKPOINT (< 768px)
-   ======================================== */
-@media (max-width: 768px) {
-  :root {
-    --sidebar-width: 280px;
-    --font-3xl: 1.5rem;
-    --font-2xl: 1.25rem;
-    --font-xl: 1.125rem;
-    --spacing-lg: 16px;
-    --spacing-xl: 24px;
-  }
-
-  .mobileMenuToggle {
-    display: flex;
-  }
-
-  .mobileOverlay {
-    display: block;
-  }
-
-  /* Improve touch scrolling */
-  body {
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* ========================================
-   SMALL MOBILE (< 480px)
-   ======================================== */
+/* Mobile Base Adjustments */
 @media (max-width: 480px) {
   :root {
-    --font-3xl: 1.375rem;
-    --font-2xl: 1.125rem;
-    --font-xl: 1rem;
-    --spacing-md: 12px;
-    --spacing-lg: 16px;
-    --radius-xl: 20px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
     --radius-lg: 14px;
+    --radius-xl: 20px;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  input,
+  textarea {
+    padding: 14px;
+  }
+}
+
+/* Tablet Adjustments */
+@media (min-width: 481px) and (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Desktop Adjustments */
+@media (min-width: 1200px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1600px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+/* Responsive Utility Classes */
+.hide-mobile {
+  display: block;
+}
+
+.show-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .show-mobile {
+    display: block !important;
+  }
+}
+
+/* Container Responsive */
+.container-responsive {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    padding: 0 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-responsive {
+    padding: 0 32px;
+  }
+}
+
+/* Text Responsive */
+.text-responsive {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.heading-responsive {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.2;
+}
+
+/* Spacing Utilities */
+@media (max-width: 480px) {
+  .p-responsive {
+    padding: 12px;
+  }
+
+  .gap-responsive {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .p-responsive {
+    padding: 16px;
+  }
+
+  .gap-responsive {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 769px) {
+  .p-responsive {
+    padding: 24px;
+  }
+
+  .gap-responsive {
+    gap: 20px;
   }
 }
 
 /* ========================================
-   EXTRA SMALL MOBILE (< 360px)
-   ======================================== */
-@media (max-width: 360px) {
-  :root {
-    --spacing-md: 10px;
-    --spacing-lg: 14px;
-    --font-base: 0.9375rem;
-  }
-}
-
-/* ========================================
-   LANDSCAPE MOBILE
-   ======================================== */
-@media (max-height: 500px) and (orientation: landscape) {
-  :root {
-    --spacing-lg: 12px;
-    --spacing-xl: 16px;
-  }
-}
-
-/* ========================================
-   LARGE SCREENS (> 1280px)
-   ======================================== */
-@media (min-width: 1280px) {
-  :root {
-    --sidebar-width: 300px;
-  }
-}
-
-/* ========================================
-   ACCESSIBILITY ENHANCEMENTS
+   ENHANCED INTERACTIVE ANIMATIONS
    ======================================== */
 
-/* Reduce motion for users who prefer it */
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Focus visible styles */
-:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --border-color: rgba(0, 0, 0, 0.2);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* ========================================
-   INTERACTIVE MICRO-ANIMATIONS
-   ======================================== */
-
-/* Ripple effect for buttons */
-@keyframes ripple {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-/* Bounce animation */
+/* Bounce Animation */
 @keyframes bounce {
 
   0%,
@@ -477,7 +414,28 @@ textarea::placeholder {
   }
 }
 
-/* Shake animation for errors */
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+/* Scale Up Animation */
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.3s ease forwards;
+}
+
+/* Shake Animation for errors */
 @keyframes shake {
 
   0%,
@@ -501,36 +459,121 @@ textarea::placeholder {
   }
 }
 
-/* Scale up on hover */
-@keyframes scaleUp {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.02);
-  }
-}
-
-/* Utility classes for animations */
-.animate-bounce {
-  animation: bounce 1s ease infinite;
-}
-
 .animate-shake {
   animation: shake 0.5s ease;
 }
 
-/* Interactive hover states */
-.interactive {
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+/* Ripple Effect */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
-.interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
 }
 
-.interactive:active {
-  transform: translateY(0);
+.ripple-effect::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ripple-effect:active::after {
+  animation: ripple 0.5s ease;
+}
+
+/* Shimmer Loading Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Interactive Hover States */
+.hover-lift {
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (hover: none) {
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .hover-lift:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Focus Visible for Accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Smooth scroll behavior */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  body {
+    font-size: 14px;
+  }
 }
