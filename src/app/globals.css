@@ -61,6 +61,28 @@
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
   --transition-slow: 400ms ease;
+
+  /* Responsive Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Touch-friendly sizes */
+  --touch-target-min: 44px;
+  --sidebar-width: 280px;
+  --sidebar-width-collapsed: 0px;
+
+  /* Typography scale */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 1.875rem;
 }
 
 html,
@@ -248,4 +270,267 @@ textarea::placeholder {
     radial-gradient(circle at 10% 10%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
     radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.05) 0%, transparent 50%);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN SYSTEM
+   ======================================== */
+
+/* Mobile Menu Toggle Button */
+.mobileMenuToggle {
+  display: none;
+  position: fixed;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  z-index: 150;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+}
+
+.mobileMenuToggle:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--primary-light);
+}
+
+.mobileMenuToggle:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Overlay */
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.mobileOverlay.active {
+  opacity: 1;
+}
+
+/* Touch-friendly button enhancements */
+@media (hover: none) and (pointer: coarse) {
+
+  button,
+  a,
+  [role="button"] {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+  }
+}
+
+/* Responsive Container */
+.responsiveContainer {
+  width: 100%;
+  max-width: 100%;
+  padding: var(--spacing-md);
+}
+
+/* ========================================
+   TABLET BREAKPOINT (768px - 1024px)
+   ======================================== */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+    --spacing-lg: 20px;
+    --spacing-xl: 28px;
+  }
+}
+
+/* ========================================
+   MOBILE BREAKPOINT (< 768px)
+   ======================================== */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 280px;
+    --font-3xl: 1.5rem;
+    --font-2xl: 1.25rem;
+    --font-xl: 1.125rem;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+  }
+
+  .mobileMenuToggle {
+    display: flex;
+  }
+
+  .mobileOverlay {
+    display: block;
+  }
+
+  /* Improve touch scrolling */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE (< 480px)
+   ======================================== */
+@media (max-width: 480px) {
+  :root {
+    --font-3xl: 1.375rem;
+    --font-2xl: 1.125rem;
+    --font-xl: 1rem;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --radius-xl: 20px;
+    --radius-lg: 14px;
+  }
+}
+
+/* ========================================
+   EXTRA SMALL MOBILE (< 360px)
+   ======================================== */
+@media (max-width: 360px) {
+  :root {
+    --spacing-md: 10px;
+    --spacing-lg: 14px;
+    --font-base: 0.9375rem;
+  }
+}
+
+/* ========================================
+   LANDSCAPE MOBILE
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --spacing-lg: 12px;
+    --spacing-xl: 16px;
+  }
+}
+
+/* ========================================
+   LARGE SCREENS (> 1280px)
+   ======================================== */
+@media (min-width: 1280px) {
+  :root {
+    --sidebar-width: 300px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ========================================
+   INTERACTIVE MICRO-ANIMATIONS
+   ======================================== */
+
+/* Ripple effect for buttons */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Bounce animation */
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Shake animation for errors */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Scale up on hover */
+@keyframes scaleUp {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.02);
+  }
+}
+
+/* Utility classes for animations */
+.animate-bounce {
+  animation: bounce 1s ease infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease;
+}
+
+/* Interactive hover states */
+.interactive {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.interactive:active {
+  transform: translateY(0);
 }

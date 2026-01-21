@@ -4,8 +4,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
     title: 'Cloud Desktop - ไฟล์ของคุณบนคลาวด์',
-    description: 'โซลูชันการจัดเก็บข้อมูลบนคลาวด์ที่ทันสมัยพร้อมการเชื่อมต่อ Google Drive อัปโหลด จัดการ และแชร์ไฟล์ของคุณอย่างปลอดภัย',
-    keywords: ['cloud storage', 'file management', 'google drive', 'cloud desktop', 'จัดเก็บไฟล์', 'คลาวด์'],
+    description: 'ระบบจัดเก็บไฟล์บนคลาวด์ที่ทันสมัย เชื่อมต่อกับ Google Drive อัปโหลด จัดการ และแชร์ไฟล์ของคุณอย่างปลอดภัย',
+    keywords: ['คลาวด์', 'จัดการไฟล์', 'google drive', 'cloud desktop'],
     authors: [{ name: 'Cloud Desktop Team' }],
     openGraph: {
         title: 'Cloud Desktop',
@@ -20,7 +20,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en">
+        <html lang="th">
             <body className="bg-pattern">
                 <AuthProvider>
                     {children}

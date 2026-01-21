@@ -77,8 +77,8 @@ export default function FileUploader({ onUpload, onClose }: FileUploaderProps) {
                 <div className={styles.icon} style={{ background: 'var(--success)', color: 'white' }}>
                     <Check size={32} />
                 </div>
-                <h3>Upload Complete!</h3>
-                <p className={styles.text}>Your files have been successfully uploaded.</p>
+                <h3>อัปโหลดเสร็จสิ้น!</h3>
+                <p className={styles.text}>ไฟล์ของคุณถูกอัปโหลดเรียบร้อยแล้ว</p>
             </div>
         )
     }
@@ -110,9 +110,9 @@ export default function FileUploader({ onUpload, onClose }: FileUploaderProps) {
                         openFileExplorer()
                     }}>
                         <Upload size={16} />
-                        Select a file
+                        เลือกไฟล์
                     </button>
-                    <p className={styles.text}>or Drag and drop a file here</p>
+                    <p className={styles.text}>หรือลากและวางไฟล์ที่นี่</p>
                 </>
             ) : (
                 <>
@@ -143,14 +143,14 @@ export default function FileUploader({ onUpload, onClose }: FileUploaderProps) {
                             onClick={onClose}
                             disabled={uploading}
                         >
-                            Cancel
+                            ยกเลิก
                         </button>
                         <button
                             className={styles.uploadAction}
                             onClick={handleUploadClick}
                             disabled={uploading}
                         >
-                            {uploading ? 'Uploading...' : 'Upload Files'}
+                            {uploading ? 'กำลังอัปโหลด...' : 'อัปโหลดไฟล์'}
                         </button>
                     </div>
                 </>

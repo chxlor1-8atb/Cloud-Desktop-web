@@ -162,7 +162,7 @@ export default function DashboardPage() {
 
     // Delete file
     const handleDeleteFile = async (fileId: string) => {
-        if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบไฟล์นี้?')) return
+        if (!confirm('คุณแน่ใจหรือว่าต้องการลบไฟล์นี้?')) return
 
         try {
             await fetch(`/api/files/${fileId}`, { method: 'DELETE' })
@@ -220,7 +220,7 @@ export default function DashboardPage() {
                         onClick={() => setShowNewFolderModal(true)}
                     >
                         <FolderPlus size={20} />
-                        <span>โฟลเดอร์ใหม่</span>
+                        <span>สร้างโฟลเดอร์ใหม่</span>
                     </button>
                 </div>
 
@@ -375,7 +375,7 @@ export default function DashboardPage() {
                                             </span>
                                             <span className={styles.fileDate}>
                                                 {file.modifiedTime
-                                                    ? new Date(file.modifiedTime).toLocaleDateString('th-TH')
+                                                    ? new Date(file.modifiedTime).toLocaleDateString()
                                                     : '--'}
                                             </span>
                                         </>
@@ -430,7 +430,7 @@ export default function DashboardPage() {
                             {selectedFile.modifiedTime && (
                                 <div className={styles.detailsRow}>
                                     <span>แก้ไขเมื่อ</span>
-                                    <span>{new Date(selectedFile.modifiedTime).toLocaleDateString('th-TH')}</span>
+                                    <span>{new Date(selectedFile.modifiedTime).toLocaleDateString()}</span>
                                 </div>
                             )}
                         </div>
@@ -462,7 +462,7 @@ export default function DashboardPage() {
                                 onClick={() => handleDeleteFile(selectedFile.id)}
                             >
                                 <Trash2 size={18} />
-                                ลบไฟล์
+                                ลบ
                             </button>
                         </div>
                     </div>
@@ -474,7 +474,7 @@ export default function DashboardPage() {
                 <div className={styles.modalOverlay} onClick={() => setShowNewFolderModal(false)}>
                     <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
-                            <h3>โฟลเดอร์ใหม่</h3>
+                            <h3>สร้างโฟลเดอร์ใหม่</h3>
                             <button onClick={() => setShowNewFolderModal(false)}>
                                 <X size={20} />
                             </button>
