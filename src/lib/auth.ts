@@ -29,10 +29,9 @@ export const authOptions: NextAuthOptions = {
                     console.log(`Verifying OTP for ${email} with code ${otp}`)
 
                     // Atomic Validate-and-Mark-Used
-                    // This prevents race conditions where two requests check simultaneously
                     const result = await sql`
                         UPDATE otp_codes 
-                        SET used = TRUE 
+                        SET used = TRUE, used_at = NOW()
                         WHERE email = ${email} 
                         AND otp = ${otp}
                         AND expires_at > NOW()
@@ -41,7 +40,7 @@ export const authOptions: NextAuthOptions = {
                     `
 
                     if (result.length > 0) {
-                        console.log('✅ OTP Verified Successfully (Atomic):', result[0])
+                        console.log('✅ OTP Verified Successfully:', result[0])
                         return {
                             id: email,
                             email: email,
@@ -49,8 +48,8 @@ export const authOptions: NextAuthOptions = {
                         }
                     }
 
-                    // If we get here, verification failed. Let's find out why for logging.
-                    console.log('OTP verification failed (Atomic Update returned no rows)')
+                    // Verification failed analysis
+                    console.log('OTP verification failed - Analyzing why...')
 
                     const check = await sql`
                         SELECT * FROM otp_codes 
@@ -62,13 +61,18 @@ export const authOptions: NextAuthOptions = {
 
                     if (check.length > 0) {
                         const rec = check[0]
-                        console.log('Found matching record state:', {
-                            used: rec.used,
-                            expired: new Date(rec.expires_at) < new Date(),
-                            created_at: rec.created_at
-                        })
+                        const isExpired = new Date(rec.expires_at) < new Date()
+                        const isUsed = rec.used
+
+                        console.log(`❌ Found record but invalid: Used=${isUsed}, Expired=${isExpired}`)
+
+                        if (isUsed) {
+                            // If it was used less than 2 seconds ago, it might be a double-click race condition
+                            // We could opt to allow it, but for security strictness, we reject.
+                            console.log('   (Likely duplicate request or replay attack)')
+                        }
                     } else {
-                        console.log('No matching record found at all.')
+                        console.log('❌ No record found for this Email+OTP combination.')
                     }
 
                     return null
