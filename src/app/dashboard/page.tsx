@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { formatFileSize, getFileIcon } from '@/lib/file-utils'
 import styles from './dashboard.module.css'
+import FileUploader from './components/FileUploader'
 
 interface DriveFile {
     id: string
@@ -43,6 +44,7 @@ export default function DashboardPage() {
     ])
     const [currentFolderId, setCurrentFolderId] = useState<string | null>(null)
     const [showNewFolderModal, setShowNewFolderModal] = useState(false)
+    const [showUploadModal, setShowUploadModal] = useState(false)
     const [newFolderName, setNewFolderName] = useState('')
     const [creatingFolder, setCreatingFolder] = useState(false)
     const [selectedFile, setSelectedFile] = useState<DriveFile | null>(null)
@@ -90,14 +92,13 @@ export default function DashboardPage() {
     }, [status, router, fetchFiles, fetchStorageQuota, currentFolderId])
 
     // Handle file upload
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFiles = e.target.files
+    const handleFileUpload = async (uploadedFiles: File[]) => {
         if (!uploadedFiles?.length) return
 
         setUploading(true)
 
         try {
-            for (const file of Array.from(uploadedFiles)) {
+            for (const file of uploadedFiles) {
                 const formData = new FormData()
                 formData.append('file', file)
                 if (currentFolderId) {
@@ -115,7 +116,6 @@ export default function DashboardPage() {
             console.error('Error uploading files:', error)
         } finally {
             setUploading(false)
-            e.target.value = ''
         }
     }
 
@@ -207,17 +207,13 @@ export default function DashboardPage() {
                 </div>
 
                 <div className={styles.sidebarActions}>
-                    <label className={styles.uploadButton}>
+                    <button
+                        className={styles.uploadButton}
+                        onClick={() => setShowUploadModal(true)}
+                    >
                         <Upload size={20} />
                         <span>Upload</span>
-                        <input
-                            type="file"
-                            multiple
-                            onChange={handleFileUpload}
-                            style={{ display: 'none' }}
-                            disabled={uploading}
-                        />
-                    </label>
+                    </button>
 
                     <button
                         className={styles.newFolderButton}
@@ -506,6 +502,26 @@ export default function DashboardPage() {
                             >
                                 {creatingFolder ? <Loader2 className={styles.spinner} size={18} /> : 'Create'}
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Upload Modal */}
+            {showUploadModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowUploadModal(false)}>
+                    <div className={styles.modal} onClick={(e) => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden' }}>
+                        <div className={styles.modalHeader}>
+                            <h3>Upload Files</h3>
+                            <button onClick={() => setShowUploadModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div style={{ padding: '24px' }}>
+                            <FileUploader
+                                onUpload={handleFileUpload}
+                                onClose={() => setShowUploadModal(false)}
+                            />
                         </div>
                     </div>
                 </div>

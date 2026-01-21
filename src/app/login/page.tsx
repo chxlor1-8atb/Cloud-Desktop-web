@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Cloud, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react'
+import { Mail, Lock, ArrowRight, Loader2 } from 'lucide-react'
+import Image from 'next/image'
+import icon from '../icon.png'
 import styles from './login.module.css'
 
 export default function LoginPage() {
@@ -82,7 +84,13 @@ export default function LoginPage() {
                 {/* Logo */}
                 <div className={styles.logo}>
                     <div className={styles.logoIcon}>
-                        <Cloud size={40} />
+                        <Image
+                            src={icon}
+                            alt="Cloud Desktop Logo"
+                            width={40}
+                            height={40}
+                            style={{ objectFit: 'contain' }}
+                        />
                     </div>
                     <h1 className={styles.logoText}>Cloud Desktop</h1>
                     <p className={styles.logoSubtext}>Your files in the cloud</p>
