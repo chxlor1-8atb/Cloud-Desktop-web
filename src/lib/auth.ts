@@ -28,12 +28,9 @@ export const authOptions: NextAuthOptions = {
                 try {
                     console.log(`Verifying OTP for ${email} with code ${otp}`)
 
-                    try {
-                        console.log(`Verifying OTP for ${email} with code ${otp}`)
-
-                        // Atomic Validate-and-Mark-Used
-                        // This prevents race conditions where two requests check simultaneously
-                        const result = await sql`
+                    // Atomic Validate-and-Mark-Used
+                    // This prevents race conditions where two requests check simultaneously
+                    const result = await sql`
                         UPDATE otp_codes 
                         SET used = TRUE 
                         WHERE email = ${email} 
@@ -43,19 +40,19 @@ export const authOptions: NextAuthOptions = {
                         RETURNING *
                     `
 
-                        if (result.length > 0) {
-                            console.log('✅ OTP Verified Successfully (Atomic):', result[0])
-                            return {
-                                id: email,
-                                email: email,
-                                name: email.split('@')[0],
-                            }
+                    if (result.length > 0) {
+                        console.log('✅ OTP Verified Successfully (Atomic):', result[0])
+                        return {
+                            id: email,
+                            email: email,
+                            name: email.split('@')[0],
                         }
+                    }
 
-                        // If we get here, verification failed. Let's find out why for logging.
-                        console.log('OTP verification failed (Atomic Update returned no rows)')
+                    // If we get here, verification failed. Let's find out why for logging.
+                    console.log('OTP verification failed (Atomic Update returned no rows)')
 
-                        const check = await sql`
+                    const check = await sql`
                         SELECT * FROM otp_codes 
                         WHERE email = ${email} 
                         AND otp = ${otp}
@@ -63,24 +60,24 @@ export const authOptions: NextAuthOptions = {
                         LIMIT 1
                     `
 
-                        if (check.length > 0) {
-                            const rec = check[0]
-                            console.log('Found matching record state:', {
-                                used: rec.used,
-                                expired: new Date(rec.expires_at) < new Date(),
-                                created_at: rec.created_at
-                            })
-                        } else {
-                            console.log('No matching record found at all.')
-                        }
-
-                        return null
-
-                    } catch (error) {
-                        console.error('Error verifying OTP - Database error:', error)
-                        return null
+                    if (check.length > 0) {
+                        const rec = check[0]
+                        console.log('Found matching record state:', {
+                            used: rec.used,
+                            expired: new Date(rec.expires_at) < new Date(),
+                            created_at: rec.created_at
+                        })
+                    } else {
+                        console.log('No matching record found at all.')
                     }
-                },
+
+                    return null
+
+                } catch (error) {
+                    console.error('Error verifying OTP - Database error:', error)
+                    return null
+                }
+            },
         }),
     ],
     pages: {
