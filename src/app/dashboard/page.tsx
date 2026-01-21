@@ -9,7 +9,7 @@ import {
     Music, Archive, Folder, Download, Trash2, MoreVertical,
     X, Loader2, ChevronRight, Home, RefreshCw
 } from 'lucide-react'
-import { formatFileSize, getFileIcon } from '@/lib/google-drive'
+import { formatFileSize, getFileIcon } from '@/lib/file-utils'
 import styles from './dashboard.module.css'
 
 interface DriveFile {

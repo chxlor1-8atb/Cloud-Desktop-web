@@ -1,3 +1,4 @@
+import 'server-only'
 import { google } from 'googleapis'
 
 // Initialize Google Drive client with service account
