@@ -16,7 +16,7 @@ export async function GET(
                 downloadFile(fileId),
             ])
 
-            return new NextResponse(content, {
+            return new NextResponse(new Uint8Array(content), {
                 headers: {
                     'Content-Type': file.mimeType,
                     'Content-Disposition': `attachment; filename="${file.name}"`,
