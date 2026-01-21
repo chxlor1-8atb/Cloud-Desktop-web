@@ -60,7 +60,7 @@
 .logoText {
     font-size: 20px;
     font-weight: 700;
-    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #64748b 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -79,18 +79,18 @@
     justify-content: center;
     gap: 10px;
     padding: 14px 20px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: var(--gradient-primary);
     border-radius: 12px;
     color: white;
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-normal);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 .uploadButton:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
 }
 
 .newFolderButton {
@@ -99,7 +99,7 @@
     justify-content: center;
     gap: 10px;
     padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     color: var(--text-primary);
@@ -109,8 +109,9 @@
 }
 
 .newFolderButton:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--primary);
+    background: rgba(255, 255, 255, 1);
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-sm);
 }
 
 .sidebarNav {
@@ -128,21 +129,23 @@
 }
 
 .navItem:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     color: var(--text-primary);
 }
 
 .navItem.active {
-    background: rgba(99, 102, 241, 0.15);
-    color: var(--primary-light);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+    font-weight: 500;
 }
 
 /* Storage Info */
 .storageInfo {
     padding: 16px;
-    background: rgba(255, 255, 255, 0.03);
+    background: #f8fafc;
     border-radius: 12px;
     margin-bottom: 16px;
+    border: 1px solid var(--border-color);
 }
 
 .storageHeader {
@@ -156,14 +159,14 @@
 
 .storageBar {
     height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     border-radius: 3px;
     overflow: hidden;
 }
 
 .storageUsed {
     height: 100%;
-    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    background: linear-gradient(90deg, #8b5cf6, #06b6d4);
     border-radius: 3px;
     transition: width var(--transition-slow);
 }
@@ -180,8 +183,9 @@
     align-items: center;
     gap: 12px;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
+    background: #f8fafc;
     border-radius: 12px;
+    border: 1px solid var(--border-color);
 }
 
 .userAvatar {
@@ -194,6 +198,7 @@
     justify-content: center;
     color: white;
     overflow: hidden;
+    box-shadow: 0 2px 5px rgba(139, 92, 246, 0.2);
 }
 
 .userAvatar img {
@@ -263,15 +268,17 @@
     align-items: center;
     gap: 12px;
     padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
 }
 
 .searchBar:focus-within {
     border-color: var(--primary);
-    background: rgba(99, 102, 241, 0.05);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
 .searchBar svg {
@@ -295,20 +302,23 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 4px;
 }
 
 .refreshButton {
     padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border: 1px solid var(--border-color);
     border-radius: 10px;
     color: var(--text-secondary);
     transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
 }
 
 .refreshButton:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
     color: var(--text-primary);
+    border-color: var(--border-color-hover);
 }
 
 .spinning {
@@ -317,10 +327,11 @@
 
 .viewToggle {
     display: flex;
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border: 1px solid var(--border-color);
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
 }
 
 .viewToggle button {
@@ -332,11 +343,13 @@
 
 .viewToggle button:hover {
     color: var(--text-primary);
+    background: #f8fafc;
 }
 
 .viewToggle button.active {
-    background: var(--primary);
-    color: white;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+    font-weight: 600;
 }
 
 /* Breadcrumbs */
@@ -364,8 +377,8 @@
 }
 
 .breadcrumbItem button:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--primary-light);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
 }
 
 /* Upload Progress */
@@ -374,10 +387,10 @@
     align-items: center;
     gap: 12px;
     padding: 16px 20px;
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 12px;
-    color: var(--primary-light);
+    color: var(--primary);
     margin-bottom: 20px;
     animation: fadeIn 0.3s ease;
 }
@@ -439,7 +452,7 @@
 }
 
 .fileCard {
-    background: var(--bg-card);
+    background: white;
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 20px;
@@ -449,18 +462,20 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    box-shadow: var(--shadow-sm);
 }
 
 .fileCard:hover {
-    background: var(--bg-card-hover);
+    background: white;
     border-color: var(--border-color-hover);
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .fileCard.selected {
     border-color: var(--primary);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(139, 92, 246, 0.05);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
 .fileIcon {
@@ -469,9 +484,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: #f1f5f9;
     border-radius: 12px;
-    color: var(--primary-light);
+    color: var(--primary);
     overflow: hidden;
 }
 
@@ -509,13 +524,13 @@
 
 .fileActions button {
     padding: 8px;
-    background: rgba(255, 255, 255, 0.1);
+    background: #f1f5f9;
     border-radius: 8px;
     color: var(--text-secondary);
 }
 
 .fileActions button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #e2e8f0;
     color: var(--text-primary);
 }
 
@@ -531,6 +546,13 @@
     padding: 12px 20px;
     border-radius: 10px;
     gap: 16px;
+    box-shadow: none;
+}
+
+.filesList .fileCard:hover {
+    transform: none;
+    background: #f8fafc;
+    box-shadow: none;
 }
 
 .filesList .fileIcon {
@@ -564,7 +586,7 @@
 /* Details Sidebar */
 .detailsSidebar {
     width: 320px;
-    background: var(--bg-sidebar);
+    background: white;
     border-left: 1px solid var(--border-color);
     position: fixed;
     top: 0;
@@ -573,6 +595,7 @@
     padding: 24px;
     animation: slideIn 0.3s ease;
     z-index: 100;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.03);
 }
 
 @keyframes slideIn {
@@ -605,7 +628,7 @@
 }
 
 .detailsHeader button:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: #f1f5f9;
     color: var(--text-primary);
 }
 
@@ -618,12 +641,13 @@
 .detailsPreview {
     width: 100%;
     aspect-ratio: 1;
-    background: rgba(255, 255, 255, 0.03);
+    background: #f8fafc;
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border: 1px solid var(--border-color);
 }
 
 .detailsPreview img {
@@ -685,23 +709,26 @@
 }
 
 .downloadButton {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: var(--gradient-primary);
     color: white;
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.25);
 }
 
 .downloadButton:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.35);
 }
 
 .viewButton {
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border: 1px solid var(--border-color);
     color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
 }
 
 .viewButton:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border-color: var(--primary-light);
 }
 
 .deleteButton {
@@ -711,21 +738,24 @@
     gap: 8px;
     padding: 12px 16px;
     background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    border: 1px solid rgba(239, 68, 68, 0.2);
     border-radius: 10px;
     color: #ef4444;
     font-weight: 500;
+    transition: all var(--transition-fast);
 }
 
 .deleteButton:hover {
-    background: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
 }
 
 /* Modal */
 .modalOverlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    /* Lighter overlay */
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -737,16 +767,17 @@
 .modal {
     width: 100%;
     max-width: 400px;
-    background: var(--bg-card);
+    background: white;
     border: 1px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
     animation: scaleIn 0.2s ease;
+    box-shadow: var(--shadow-lg);
 }
 
 @keyframes scaleIn {
     from {
-        transform: scale(0.9);
+        transform: scale(0.95);
         opacity: 0;
     }
 
@@ -762,11 +793,13 @@
     justify-content: space-between;
     padding: 20px 24px;
     border-bottom: 1px solid var(--border-color);
+    background: #f8fafc;
 }
 
 .modalHeader h3 {
     font-size: 18px;
     font-weight: 600;
+    color: var(--text-primary);
 }
 
 .modalHeader button {
@@ -777,7 +810,8 @@
 }
 
 .modalHeader button:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-primary);
 }
 
 .modalBody {
@@ -786,6 +820,7 @@
 
 .modalBody input {
     width: 100%;
+    background: white;
 }
 
 .modalFooter {
@@ -793,36 +828,50 @@
     gap: 12px;
     padding: 20px 24px;
     border-top: 1px solid var(--border-color);
+    background: #f8fafc;
 }
 
 .cancelButton,
 .createButton {
     flex: 1;
-    padding: 12px 20px;
+    padding: 12px 16px;
     border-radius: 10px;
-    font-weight: 500;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
 }
 
 .cancelButton {
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
+    border: 1px solid var(--border-color);
     color: var(--text-secondary);
 }
 
 .cancelButton:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f1f5f9;
+    color: var(--text-primary);
 }
 
 .createButton {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: var(--gradient-primary);
+    border: none;
     color: white;
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.createButton:hover {
+    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.35);
+    transform: translateY(-1px);
+}
+
 .createButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 /* Responsive */
