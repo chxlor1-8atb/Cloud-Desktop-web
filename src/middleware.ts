@@ -4,7 +4,7 @@ import { getToken } from 'next-auth/jwt'
 
 export async function middleware(request: NextRequest) {
     const token = await getToken({ req: request })
-    const isAuthPage = request.nextUrl.pathname.startsWith('/login')
+    const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname === '/'
     const isDashboard = request.nextUrl.pathname.startsWith('/dashboard')
 
     // Redirect authenticated users away from login page
