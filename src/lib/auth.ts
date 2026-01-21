@@ -63,13 +63,24 @@ export const authOptions: NextAuthOptions = {
                         const rec = check[0]
                         const isExpired = new Date(rec.expires_at) < new Date()
                         const isUsed = rec.used
+                        const usedAt = rec.used_at ? new Date(rec.used_at) : null
+                        const now = new Date()
 
-                        console.log(`❌ Found record but invalid: Used=${isUsed}, Expired=${isExpired}`)
+                        console.log(`❌ Found record but invalid: Used=${isUsed}, Expired=${isExpired}, UsedAt=${usedAt}`)
 
-                        if (isUsed) {
-                            // If it was used less than 2 seconds ago, it might be a double-click race condition
-                            // We could opt to allow it, but for security strictness, we reject.
-                            console.log('   (Likely duplicate request or replay attack)')
+                        if (isUsed && usedAt) {
+                            // Idempotency: Allow recently used OTP (within 10 seconds) to succeed again
+                            // This solves "double-click" or "network retry" race conditions
+                            const timeDiff = now.getTime() - usedAt.getTime()
+                            if (timeDiff < 10000) { // 10 seconds window
+                                console.log(`⚠️ Idempotency check: OTP used ${timeDiff}ms ago. Allowing login.`)
+                                return {
+                                    id: email,
+                                    email: email,
+                                    name: email.split('@')[0],
+                                }
+                            }
+                            console.log('   (Likely duplicate request or replay attack outside window)')
                         }
                     } else {
                         console.log('❌ No record found for this Email+OTP combination.')
