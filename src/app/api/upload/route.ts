@@ -18,6 +18,16 @@ export async function POST(request: NextRequest) {
         const bytes = await file.arrayBuffer()
         const buffer = Buffer.from(bytes)
 
+        // Debug: Log folder ID being used
+        const targetFolderId = folderId || process.env.GOOGLE_DRIVE_FOLDER_ID
+        console.log('Upload request:', {
+            fileName: file.name,
+            fileType: file.type,
+            folderId: folderId,
+            targetFolderId: targetFolderId,
+            envFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID
+        })
+
         // Upload to Google Drive
         const uploadedFile = await uploadFile(
             buffer,
