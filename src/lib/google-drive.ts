@@ -38,6 +38,8 @@ export async function listFiles(folderId?: string): Promise<DriveFile[]> {
             fields: 'files(id, name, mimeType, size, createdTime, modifiedTime, webViewLink, webContentLink, thumbnailLink, iconLink)',
             orderBy: 'modifiedTime desc',
             pageSize: 100,
+            supportsAllDrives: true,
+            includeItemsFromAllDrives: true,
         })
 
         return (response.data.files || []) as DriveFile[]
@@ -68,6 +70,7 @@ export async function uploadFile(
                 body: require('stream').Readable.from(file),
             },
             fields: 'id, name, mimeType, size, createdTime, modifiedTime, webViewLink, webContentLink',
+            supportsAllDrives: true,
         })
 
         return response.data as DriveFile
